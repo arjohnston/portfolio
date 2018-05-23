@@ -1,0 +1,56 @@
+{
+  "name": "name",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Andrew Johnston",
+  "license": "MIT",
+  "description": "A react boilerplate using Next and Express",
+  "repository": {
+    "type": "svn",
+    "url": "svn://devtools/main/emergencyuniversity/www/trunk"
+  },
+  "dependencies": {
+    "address": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.2",
+    "express": "^4.16.3",
+    "lru-cache": "^4.1.3",
+    "next": "^6.0.3",
+    "npm": "^6.0.1",
+    "prop-types": "^15.6.1",
+    "raw-loader": "^0.5.1",
+    "react": "^16.3.2",
+    "react-async-script": "^0.9.1",
+    "sw-precache-webpack-plugin": "^0.11.5",
+    "url": "^0.11.0",
+    "webpack": "^3.11.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "husky": "^0.14.0",
+    "jest": "^22.4.3",
+    "lint-staged": "^4.3.0",
+    "prettier": "^1.12.1",
+    "react-dom": "^16.3.2",
+    "react-test-renderer": "^16.3.2",
+    "standard": "^10.0.2"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test jest",
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "deploy": "svn update && npm install && npm update && npm run build && pm2 restart www",
+    "lint": "prettier 'utils/**/*.js' 'static/js/**/*.js' '__tests__/**/*.js' 'components/**/*.js' 'pages/**/*.js' '*.js' --write --single-quote --no-semi && standard --fix",
+    "svn-stage": "svn status | grep '?' | sed 's/^.* /svn add /' | bash && svn status | grep '!' | sed 's/^.* /svn delete /' | bash",
+    "stage": "npm run lint && npm run test && npm run svn-stage"
+  },
+  "standard": {
+    "globals": [
+      "$"
+    ],
+    "parser": "babel-eslint"
+  }
+}
