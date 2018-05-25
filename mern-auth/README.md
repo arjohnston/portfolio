@@ -29,7 +29,8 @@ mkdir -p /data/db
 ```
 
 Set the permissions:
-(Note: it's recommended to set up a user and group over using root for security reasons)
+> Note: it's recommended to set up a user and group over using root for security reasons
+
 ```sh
 sudo chown -R `id -un` /data/db
 ```
