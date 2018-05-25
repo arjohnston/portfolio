@@ -75,7 +75,7 @@ server.listen(PORT, err => {
   console.log()
   console.log('You can view the app in the browser:')
   console.log()
-  console.log(`Local:               http://localhost:${PORT}`)
+  console.log(`Local:               http://localhost:${server.address().port}`)
   console.log(`On Your Network:     http://${address.ip()}:${server.address().port}`)
   console.log()
 })
