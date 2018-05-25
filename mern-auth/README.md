@@ -13,7 +13,7 @@ Install the dependencies:
 npm install
 ```
 
-Setup the `/config/config.js` by copying the contents of `config.example.js` into a config.js file in the same directory. `config.js` is automatically ignored by `.gitignore`
+Setup the `/config/config.js` by copying the contents of `config.example.js` into a `config.js` file in the same file directory. `config.js` is automatically ignored by `.gitignore`
 
 ### MongoDB
 This project uses [Mongo](https://www.mongodb.com/) as it's database.<br>

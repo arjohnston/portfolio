@@ -1,6 +1,6 @@
 // const mongoose = require('mongoose')
 const passport = require('passport')
-const settings = require('../config/settings')
+const settings = require('../config/config')
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
