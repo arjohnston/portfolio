@@ -34,6 +34,11 @@ app.use(bodyParser.urlencoded({'extended': 'false'}))
 // Serve the index.html build
 app.use(express.static(path.join(__dirname, 'build')))
 
+// Route requests to index
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/build/index.html'))
+})
+
 // Use Morgan for additional logging in development
 if (DEV) app.use(morgan('dev'))
 

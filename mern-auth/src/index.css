@@ -31,12 +31,23 @@ form {
   margin: 0 12px;
 }
 
-form h1 {
+.container h1 {
   font-weight: 200;
   color: #DDD;
   letter-spacing: 2px;
   margin-bottom: 1em;
   text-align: center;
+}
+
+.container a,
+.container a:visited {
+  text-decoration: none;
+  color: #00adb5;
+  transition: color 0.2s;
+}
+
+.container a:hover {
+  color: white;
 }
 
 form p {
@@ -45,16 +56,6 @@ form p {
   letter-spacing: 1px;
   margin-top: 18px;
   font-weight: 300;
-}
-
-form a,
-form a:visited {
-  text-decoration: none;
-  color: #00adb5;
-  transition: color 0.2s;
-}
-form a:hover {
-  color: white;
 }
 
 form input {
