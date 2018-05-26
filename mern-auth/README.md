@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 This project is a boilerplate using the MERN stack to create a simple web app with an authentication layer.
 
 <p align='center'>
-  <img src='https://github.com/arjohnston/boilerplates/blob/master/mern-auth/public/favicon.ico' width='600' alt='start up'>
+  <img src='https://github.com/arjohnston/boilerplates/blob/master/mern-auth/public/example.png' width='600' alt='start up'>
 </p>
 
 ## Installation
