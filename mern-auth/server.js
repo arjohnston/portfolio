@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost/mern-auth', { promiseLibrary: require('blu
     console.log(formatTerminalOutput({text: 'MongoDB Connection Successful', type: 'body'}))
     console.log()
   })
-  .catch((err) => console.error(err))
+  .catch((error) => console.error(error))
 
 // Configure Express
 // Set the port
@@ -46,28 +46,27 @@ if (DEV) app.use(morgan('dev'))
 app.use('/api/auth', auth)
 
 // Catch 404 and forward to error handler
-// TODO: improve this error status. Not nec. 404
 app.use(function (req, res, next) {
-  let err = new Error('Not Found')
-  err.status = 404
-  next(err)
+  let error = new Error('Not Found')
+  error.status = 404
+  next(error)
 })
 
 // Error handler
-app.use(function (err, req, res, next) {
-  console.log(err)
+app.use(function (error, req, res, next) {
+  console.log(error)
 
-  if (!DEV) delete err.stack
+  if (!DEV) delete error.stack
 
-  res.status(err.statusCode || 500).json(err)
+  res.status(error.statusCode || 500).json(error)
 })
 
 // Create HTTP server.
 const server = http.createServer(app)
 
 // Listen on provided port, on all network interfaces.
-server.listen(PORT, err => {
-  if (err) throw err
+server.listen(PORT, error => {
+  if (error) throw error
 
   clearTerminal()
   console.log(

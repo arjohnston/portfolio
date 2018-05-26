@@ -7,13 +7,19 @@ const User = require('../models/user')
 const config = require('../config/config')
 
 // Registers a new user if the username is unique
-// TODO: enforce stricter passwords
 router.post('/register', function (req, res) {
   if (req.body.username && req.body.password) {
     let newUser = new User({
       username: req.body.username,
       password: req.body.password
     })
+
+    let testPassword = testPasswordStrength(req.body.password)
+
+    if (!testPassword.success) {
+      // Bad Request
+      return res.status(400).send({ message: testPassword.message })
+    }
 
     newUser.save(function (error) {
       if (error) {
@@ -34,7 +40,7 @@ router.post('/login', function (req, res) {
   }, function (error, user) {
     if (error) {
       // Bad Request
-      return res.status(500).send({ message: 'Bad Request.' })
+      return res.status(400).send({ message: 'Bad Request.' })
     }
 
     if (!user) {
@@ -76,5 +82,22 @@ router.post('/verify', function (req, res) {
     }
   })
 })
+
+// Helpers
+function testPasswordStrength (password) {
+  const passwordStrength = config.passwordStrength || 'strong'
+  /* eslint-disable */
+  const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})')
+  const mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})')
+  const strongMessage = 'Invalid password. Requires 1 uppercase, 1 lowercase, 1 number and 1 special character: !@#\$%\^&'
+  const mediumMessage = 'invalid password. Requires 1 uppercase or lowercase and 1 number'
+  /* eslint-enable */
+
+  // test the password against the strong regex & return true if it passes
+  if (passwordStrength === 'strong') return { success: strongRegex.test(password), message: strongMessage }
+
+  // test medium password by default
+  return { success: mediumRegex.test(password), message: mediumMessage }
+}
 
 module.exports = router
