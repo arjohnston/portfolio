@@ -2,5 +2,5 @@
 // Set up with a unique secret key
 
 module.exports = {
-  'secret': 'mernauthexample'
+  'secretKey': 'mernauthexample'
 }

@@ -17,14 +17,16 @@ let UserSchema = new Schema({
 UserSchema.pre('save', function (next) {
   let user = this
   if (this.isModified('password') || this.isNew) {
-    bcrypt.genSalt(10, function (err, salt) {
-      if (err) {
-        return next(err)
+    bcrypt.genSalt(10, function (error, salt) {
+      if (error) {
+        return next(error)
       }
-      bcrypt.hash(user.password, salt, null, function (err, hash) {
-        if (err) {
-          return next(err)
+
+      bcrypt.hash(user.password, salt, null, function (error, hash) {
+        if (error) {
+          return next(error)
         }
+
         user.password = hash
         next()
       })
@@ -34,12 +36,13 @@ UserSchema.pre('save', function (next) {
   }
 })
 
-UserSchema.methods.comparePassword = function (passw, cb) {
-  bcrypt.compare(passw, this.password, function (err, isMatch) {
-    if (err) {
-      return cb(err)
+UserSchema.methods.comparePassword = function (passwd, callback) {
+  bcrypt.compare(passwd, this.password, function (error, isMatch) {
+    if (error) {
+      return callback(error)
     }
-    cb(null, isMatch)
+
+    callback(null, isMatch)
   })
 }
 

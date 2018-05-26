@@ -1,50 +1,78 @@
-// const mongoose = require('mongoose')
-const passport = require('passport')
-const settings = require('../config/config')
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
-const User = require('../models/user')
+const passport = require('passport')
 require('../config/passport')(passport)
+const User = require('../models/user')
+const config = require('../config/config')
 
+// Registers a new user if the username is unique
+// TODO: enforce stricter passwords
 router.post('/register', function (req, res) {
-  if (!req.body.username || !req.body.password) {
-    res.json({success: false, msg: 'Please pass username and password.'})
-  } else {
-    var newUser = new User({
+  if (req.body.username && req.body.password) {
+    let newUser = new User({
       username: req.body.username,
       password: req.body.password
     })
-    // save the user
-    newUser.save(function (err) {
-      if (err) {
-        return res.json({success: false, msg: 'Username already exists.'})
+
+    newUser.save(function (error) {
+      if (error) {
+        // Confict
+        res.status(409).send({ message: 'Username already exists.' })
+      } else {
+        // Ok
+        res.sendStatus(200)
       }
-      res.json({success: true, msg: 'Successful created new user.'})
     })
   }
 })
 
+// Logs the user in if the password and username match the database
 router.post('/login', function (req, res) {
   User.findOne({
     username: req.body.username
-  }, function (err, user) {
-    if (err) throw err
+  }, function (error, user) {
+    if (error) {
+      // Bad Request
+      return res.status(500).send({ message: 'Bad Request.' })
+    }
 
     if (!user) {
-      res.status(401).send({success: false, msg: 'Authentication failed. User not found.'})
+      // Unauthorized if the username does not match any records in the database
+      res.status(401).send({ message: 'Username or password does not match our records.' })
     } else {
-      // check if password matches
-      user.comparePassword(req.body.password, function (err, isMatch) {
-        if (isMatch && !err) {
-          // if user is found and password is right create a token
-          var token = jwt.sign(user.toJSON(), settings.secret)
-          // return the information including token as JSON
-          res.json({success: true, token: 'JWT ' + token})
+      // Check if password matches database
+      user.comparePassword(req.body.password, function (error, isMatch) {
+        if (isMatch && !error) {
+          // If the username and password matches the database, assign and
+          // return a jwt token
+          const jwtOptions = {
+            expiresIn: '2h'
+          }
+          let token = jwt.sign(user.toJSON(), config.secretKey, jwtOptions)
+          res.status(200).send({ token: 'JWT ' + token })
         } else {
-          res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'})
+          // Unauthorized
+          res.status(401).send({ message: 'Username or password does not match our records.' })
         }
       })
+    }
+  })
+})
+
+// Verifies the users session if they have an active jwtToken.
+// Used on the inital load of root '/'
+router.post('/verify', function (req, res) {
+  // Strip JWT from the token
+  const token = req.body.token.replace(/^JWT\s/, '')
+
+  jwt.verify(token, config.secretKey, function (error, decoded) {
+    if (error) {
+      // Unauthorized
+      res.sendStatus(401)
+    } else {
+      // Ok
+      res.sendStatus(200)
     }
   })
 })

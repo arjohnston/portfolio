@@ -8,7 +8,6 @@ const address = require('address')
 const mongoose = require('mongoose')
 
 // Import routes
-const book = require('./routes/book')
 const auth = require('./routes/auth')
 
 // Set the port to 3000 for development and 8080 for production
@@ -39,10 +38,10 @@ app.use(express.static(path.join(__dirname, 'build')))
 if (DEV) app.use(morgan('dev'))
 
 // Routes for all APIs here
-app.use('/api/book', book)
 app.use('/api/auth', auth)
 
 // Catch 404 and forward to error handler
+// TODO: improve this error status. Not nec. 404
 app.use(function (req, res, next) {
   let err = new Error('Not Found')
   err.status = 404
