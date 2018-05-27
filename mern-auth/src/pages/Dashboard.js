@@ -11,11 +11,11 @@ export default class extends Component {
   }
 
   componentDidMount () {
-    let token = window.localStorage.getItem('jwtToken')
+    let token = window.localStorage ? window.localStorage.getItem('jwtToken') : ''
 
     // Immediately direct to /login if no jwtToken token present
     if (!token) {
-      this.props.history.push('/login')
+      if (this.props.history) this.props.history.push('/login')
       return
     }
 
@@ -27,7 +27,7 @@ export default class extends Component {
         this.setState({ isAuthenticated: true })
       })
       .catch(() => {
-        this.props.history.push('/login')
+        if (this.props.history) this.props.history.push('/login')
       })
   }
 

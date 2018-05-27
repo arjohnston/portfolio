@@ -2,12 +2,14 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import { shallow } from 'enzyme'
-
-import Dashboard from '../../pages/Dashboard'
+import Login from '../../pages/Login'
+jest.mock('react-router-dom')
 
 describe('With Snapshot Testing', () => {
   it('should match its empty snapshot', () => {
-    const component = renderer.create(<Dashboard />)
+    const component = renderer.create(
+      <Login />
+    )
     const tree = component.toJSON()
 
     expect(tree).toMatchSnapshot()
@@ -16,6 +18,6 @@ describe('With Snapshot Testing', () => {
 
 describe('With Enzyme Testing', () => {
   it('renders without crashing', () => {
-    shallow(<Dashboard />)
+    shallow(<Login />)
   })
 })

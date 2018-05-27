@@ -80,6 +80,11 @@ server.listen(PORT, error => {
   console.log(`Local:               http://localhost:${server.address().port}`)
   console.log(`On Your Network:     http://${address.ip()}:${server.address().port}`)
   console.log()
+
+  if (!DEV) {
+    console.log('To utilize hot reloading for development, open a new terminal and run `npm run dev`')
+    console.log()
+  }
 })
 
 // Utility functions

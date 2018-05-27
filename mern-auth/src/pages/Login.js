@@ -16,7 +16,7 @@ export default class extends Component {
   }
 
   componentDidMount () {
-    let token = window.localStorage.getItem('jwtToken')
+    let token = window.localStorage ? window.localStorage.getItem('jwtToken') : ''
 
     // Logout if token is present
     if (token) {
