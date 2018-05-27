@@ -6,9 +6,11 @@ exports[`With Snapshot Testing should match its empty snapshot 1`] = `
 >
   <h1>
     Whoops, looks like the page doesn't exist. 
-    <a>
+    <Link
+      to="/"
+    >
       Return home
-    </a>
+    </Link>
   </h1>
 </div>
 `;

@@ -3,7 +3,8 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import { shallow } from 'enzyme'
 import Login from '../../pages/Login'
-jest.mock('react-router-dom')
+
+jest.mock('react-router-dom', () => ({ Link: 'Link' }))
 
 describe('With Snapshot Testing', () => {
   it('should match its empty snapshot', () => {
