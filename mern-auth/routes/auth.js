@@ -88,8 +88,9 @@ function testPasswordStrength (password) {
   const passwordStrength = config.passwordStrength || 'strong'
   /* eslint-disable */
   const strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})')
-  const mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})')
   const strongMessage = 'Invalid password. Requires 1 uppercase, 1 lowercase, 1 number and 1 special character: !@#\$%\^&'
+
+  const mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})')
   const mediumMessage = 'invalid password. Requires 1 uppercase or lowercase and 1 number'
   /* eslint-enable */
 

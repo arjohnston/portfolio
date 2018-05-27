@@ -54,6 +54,11 @@ Run the program for the first time in another terminal window:
 npm run build && npm start
 ```
 
+To utilize hot-reloading, development will need to be ran as well. In another terminal window:
+```sh
+npm run dev
+```
+
 
 ## Available Scripts
 
@@ -66,6 +71,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+> Note: In order to use API's while in development mode, the express server needs to be run in a separate terminal
 
 ### `npm run start`
 

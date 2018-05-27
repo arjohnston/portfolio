@@ -20,8 +20,8 @@ module.exports = {
   // at least 1 uppercase alphabetical character or
   // contains at least one lowercase alphabetical character and
   // at least 1 numeric character or
-  // Contains at least one uppercase alphabetical character and
+  // contains at least one uppercase alphabetical character and
   // at least 1 numeric character
-  // The string must be at least 6 characters or longer
+  // The string must be at least six characters or longer
   'passwordStrength': 'strong'
 }
