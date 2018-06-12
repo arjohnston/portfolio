@@ -40,7 +40,7 @@ app.get('*', function (req, res) {
 })
 
 // Use Morgan for additional logging in development
-if (DEV) app.use(morgan('dev'))
+app.use(morgan('dev'))
 
 // Routes for all APIs here
 app.use('/api/auth', auth)
