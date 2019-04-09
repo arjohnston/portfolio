@@ -1,7 +1,7 @@
 {
-  "name": "Emergency University",
-  "short_name": "EU",
-  "description": "Taking emergency preparedness to the next level.",
+  "name": "Example Company",
+  "short_name": "EC",
+  "description": "Taking your company to the next level.",
   "start_url": "/",
   "background_color": "#FFF",
   "theme_color": "#aa244a",
