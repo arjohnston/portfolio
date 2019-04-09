@@ -66,7 +66,7 @@ export default ({
       name='twitter:card'
       content='The most amazing description, only the best.'
     />
-    <meta name='twitter:site' content='@EmergencyU' />
+    <meta name='twitter:site' content='@ExampleC' />
     <meta name='twitter:url' content='https://www.example.com/' />
     <meta name='twitter:title' content='Example Company' />
     <meta name='twitter:description' content={pageDescription} />
