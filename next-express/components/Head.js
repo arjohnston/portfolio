@@ -75,7 +75,7 @@ export default ({
       content={`https://www.example.com/${openGraph}`}
     />
 
-    {/* <link
+    <link
       rel='apple-touch-icon'
       sizes='57x57'
       href='/static/images/icons/apple-icon-57x57.png'
@@ -143,14 +143,14 @@ export default ({
       type='image/png'
       sizes='16x16'
       href='/static/images/icons/favicon-16x16.png'
-    /> */}
+    />
     <link rel='manifest' href='/static/images/icons/manifest.json' />
     <meta name='msapplication-TileColor' content={themeColor} />
-    {/* <meta
+    <meta
       name='msapplication-TileImage'
       content='/static/images/icons/ms-icon-144x144.png'
-    /> */}
+    />
     <meta name='theme-color' content={themeColor} />
-    {/* <link rel='shortcut icon' href='/static/images/icons/favicon.ico' /> */}
+    <link rel='shortcut icon' href='/static/images/icons/favicon.ico' />
   </Head>
 )

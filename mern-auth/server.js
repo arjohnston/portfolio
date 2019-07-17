@@ -18,7 +18,7 @@ const PORT = DEV ? '3000' : '8080'
 mongoose.Promise = require('bluebird')
 mongoose.connect('mongodb://localhost/mern-auth', { promiseLibrary: require('bluebird') })
   .then(() => {
-    console.log(formatTerminalOutput({text: 'MongoDB Connection Successful', type: 'body'}))
+    console.log(formatTerminalOutput({ text: 'MongoDB Connection Successful', type: 'body' }))
     console.log()
   })
   .catch((error) => console.error(error))
@@ -29,7 +29,7 @@ app.set('port', PORT)
 
 // Use body-parser
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({'extended': 'false'}))
+app.use(bodyParser.urlencoded({ 'extended': 'false' }))
 
 // Serve the index.html build
 app.use(express.static(path.join(__dirname, 'build')))
@@ -70,9 +70,9 @@ server.listen(PORT, error => {
 
   clearTerminal()
   console.log(
-    formatTerminalOutput({text: 'DONE', type: 'title'}) +
+    formatTerminalOutput({ text: 'DONE', type: 'title' }) +
     ' ' +
-    formatTerminalOutput({text: 'Compiled Successfully', type: 'body'})
+    formatTerminalOutput({ text: 'Compiled Successfully', type: 'body' })
   )
   console.log()
   console.log('You can view the app in the browser:')
