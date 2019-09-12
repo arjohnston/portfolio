@@ -1,4 +1,6 @@
 /* jshint esversion: 6 */
+/* global fetch:false */
+
 const express = require('express')
 const compression = require('compression')
 const next = require('next')
@@ -9,13 +11,16 @@ const app = next({ dir: '.', dev })
 const handle = app.getRequestHandler()
 const path = require('path')
 const address = require('address')
-const { parse } = require('url')
+const mailer = require('./mailer')
 
-// require('es6-promise').polyfill()
-// require('isomorphic-fetch')
+require('es6-promise').polyfill()
+require('isomorphic-fetch')
+
+// Configuration files
+const config = require('./config/config')
 
 // This is where we cache our rendered HTML pages
-let cacheTime = dev ? 100 : 1000 * 60 * 60 // 1 hour
+const cacheTime = dev ? 100 : 1000 * 60 * 60 // 1 hour
 const ssrCache = new LRUCache({
   max: 100,
   maxAge: cacheTime
@@ -27,7 +32,7 @@ app.prepare().then(() => {
   server.use(bodyParser.json())
 
   server.get('/service-worker.js', (req, res) => {
-    const parsedUrl = parse(req.url, true)
+    const parsedUrl = new URL(req.url, 'https://example.com')
     const { pathname } = parsedUrl
 
     const filePath = path.join(__dirname, '.next', pathname)
@@ -56,6 +61,56 @@ app.prepare().then(() => {
   server.get('/sitemap.xml', (req, res) =>
     res.status(200).sendFile('sitemap.xml', options)
   )
+
+  // Fetch POST data for form submissions
+  server.post('/api/recaptcha', (req, res) => {
+    // Don't submit the API on DEV
+    if (dev) return { result: 'DEV', status: 200 }
+
+    if (req.body.key) {
+      const url =
+        'https://www.google.com/recaptcha/api/siteverify?secret=' +
+        config.google.recaptcha.SECRET_KEY +
+        '&response=' +
+        req.body.key
+
+      fetch(url, {
+        method: 'POST'
+      })
+        .then(response => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json()
+          } else {
+            const error = new Error(response.statusText)
+            error.response = response
+            throw error
+          }
+        })
+        .then(data => {
+          res.status(200).send({ result: data.success })
+        })
+        .catch(err => {
+          console.log(err)
+          res.sendStatus(err.response.status)
+        })
+    }
+  })
+
+  server.post('/api/contact', (req, res) => {
+    const {
+      email = '',
+      name = '',
+      message = '',
+      phone = '',
+      contactType = ''
+    } = req.body
+
+    mailer.send({ email, name, message, phone, contactType }).then(() => {
+      res.sendStatus(200)
+    }).catch((error) => {
+      res.sendStatus(error.response.status)
+    })
+  })
 
   // Utilize the below for each redirect
   // server.get(url, function (req, res) {

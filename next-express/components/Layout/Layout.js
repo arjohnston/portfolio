@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Head from './Head'
-import Header from './Header'
+import Head from '../Head'
+import Header from '../Header/Header'
+import { initGA, logPageView } from '../../utils/analytics'
+// import './style.css'
 
 export default class Layout extends React.Component {
   componentDidMount () {
@@ -15,6 +17,12 @@ export default class Layout extends React.Component {
           console.warn('service worker registration failed', err.message)
         })
     }
+
+    if (!window.GA_INITIALIZED) {
+      initGA()
+      window.GA_INITIALIZED = true
+    }
+    logPageView()
   }
 
   render () {

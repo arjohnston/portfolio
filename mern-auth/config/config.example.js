@@ -5,7 +5,7 @@ module.exports = {
   // This key should be changed from it's default to a mix of
   // random characters, numbers and symbols. At least 25 characters long
   // To generate a random key, visit https://www.lastpass.com/password-generator
-  'secretKey': 'super duper secrety key',
+  secretKey: 'super duper secrety key',
 
   // Sets the required strength. Default is 'strong'
   // strong:
@@ -23,5 +23,5 @@ module.exports = {
   // contains at least one uppercase alphabetical character and
   // at least 1 numeric character
   // The string must be at least six characters or longer
-  'passwordStrength': 'strong'
+  passwordStrength: 'strong'
 }

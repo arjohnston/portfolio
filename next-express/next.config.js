@@ -1,7 +1,8 @@
-// next.config.js
+const withCSS = require('@zeit/next-css')
+
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
-module.exports = {
+module.exports = withCSS({
   webpack: config => {
     config.plugins.push(
       new SWPrecacheWebpackPlugin({
@@ -18,4 +19,4 @@ module.exports = {
 
     return config
   }
-}
+})
