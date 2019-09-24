@@ -51,7 +51,15 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "deploy": "git pull && npm install && npm update && npm run build && pm2 restart www",
-    "lint": "prettier 'utils/**/*.js' 'static/js/**/*.js' '__tests__/**/*.js' 'components/**/*.js' 'pages/**/*.js' '*.js' --write --single-quote --no-semi && standard --fix"
+    "lint": "prettier 'utils/**/*.js' 'static/js/**/*.js' '__tests__/**/*.js' 'components/**/*.js' 'pages/**/*.js' '*.js' --write --single-quote --no-semi && standard --fix",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write --single-quote --no-semi",
+      "standard --fix",
+      "git add"
+    ]
   },
   "standard": {
     "globals": [
