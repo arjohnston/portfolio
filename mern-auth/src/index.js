@@ -20,7 +20,8 @@ ReactDOM.render(
         <Route path='/register' component={Register} />
         <Route render={function () {
           return <Error />
-        }} />
+        }}
+        />
       </Switch>
     </div>
   </Router>,

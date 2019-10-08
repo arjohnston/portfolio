@@ -50,4 +50,4 @@ npm-debug.log
 coverage
 
 # Config files
-/config/config.js
+/api/config/config.json

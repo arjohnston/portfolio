@@ -92,3 +92,22 @@ Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br>
+
+
+
+// Sets the required strength. Default is 'strong'
+// strong:
+// Contains at least 1 lowercase alphabetical character
+// Contains at least 1 uppercase alphabetical character
+// Contain at least 1 numeric character
+// Contain at least one special character: !@#\$%\^&
+// The string must be at least eight characters or longer
+
+// medium:
+// Contains at least 1 lowercase alphabetical character and
+// at least 1 uppercase alphabetical character or
+// contains at least one lowercase alphabetical character and
+// at least 1 numeric character or
+// contains at least one uppercase alphabetical character and
+// at least 1 numeric character
+// The string must be at least six characters or longer

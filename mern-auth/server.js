@@ -8,15 +8,24 @@ const address = require('address')
 const mongoose = require('mongoose')
 
 // Import routes
-const auth = require('./routes/auth')
+const auth = require('./api/routes/auth')
 
 // Set the port to 3000 for development and 8080 for production
-const DEV = process.env.NODE_ENV !== 'production'
+const DEV = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test'
+const TEST = process.env.NODE_ENV === 'test'
 const PORT = DEV ? '3000' : '8080'
+const DATABASE_NAME = TEST ? 'mern-auth-test' : 'mern-auth'
 
 // Configure Mongoose
 mongoose.Promise = require('bluebird')
-mongoose.connect('mongodb://localhost/mern-auth', { promiseLibrary: require('bluebird') })
+mongoose.connect(
+  `mongodb://localhost/${DATABASE_NAME}`,
+  {
+    promiseLibrary: require('bluebird'),
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
   .then(() => {
     console.log(formatTerminalOutput({ text: 'MongoDB Connection Successful', type: 'body' }))
     console.log()
@@ -29,7 +38,7 @@ app.set('port', PORT)
 
 // Use body-parser
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ 'extended': 'false' }))
+app.use(bodyParser.urlencoded({ extended: 'false' }))
 
 // Serve the index.html build
 app.use(express.static(path.join(__dirname, 'build')))
@@ -40,17 +49,21 @@ app.get('*', function (req, res) {
 })
 
 // Use Morgan for additional logging in development
-app.use(morgan('dev'))
+if (DEV) {
+  app.use(morgan('dev'))
+}
 
 // Routes for all APIs here
 app.use('/api/auth', auth)
 
 // Catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  let error = new Error('Not Found')
-  error.status = 404
-  next(error)
-})
+if (!TEST) {
+  app.use(function (req, res, next) {
+    const error = new Error('Not Found')
+    error.status = 404
+    next(error)
+  })
+}
 
 // Error handler
 app.use(function (error, req, res, next) {
@@ -68,22 +81,24 @@ const server = http.createServer(app)
 server.listen(PORT, error => {
   if (error) throw error
 
-  clearTerminal()
-  console.log(
-    formatTerminalOutput({ text: 'DONE', type: 'title' }) +
-    ' ' +
-    formatTerminalOutput({ text: 'Compiled Successfully', type: 'body' })
-  )
-  console.log()
-  console.log('You can view the app in the browser:')
-  console.log()
-  console.log(`Local:               http://localhost:${server.address().port}`)
-  console.log(`On Your Network:     http://${address.ip()}:${server.address().port}`)
-  console.log()
-
-  if (!DEV) {
-    console.log('To utilize hot reloading for development, open a new terminal and run `npm run dev`')
+  if (!TEST) {
+    clearTerminal()
+    console.log(
+      formatTerminalOutput({ text: 'DONE', type: 'title' }) +
+      ' ' +
+      formatTerminalOutput({ text: 'Compiled Successfully', type: 'body' })
+    )
     console.log()
+    console.log('You can view the app in the browser:')
+    console.log()
+    console.log(`Local:               http://localhost:${server.address().port}`)
+    console.log(`On Your Network:     http://${address.ip()}:${server.address().port}`)
+    console.log()
+
+    if (!DEV) {
+      console.log('To utilize hot reloading for development, open a new terminal and run `npm run dev`')
+      console.log()
+    }
   }
 })
 
@@ -106,3 +121,5 @@ function clearTerminal () {
 
   process.stdout.write(CLEAR_CONSOLE)
 }
+
+module.exports = server

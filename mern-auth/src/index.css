@@ -60,12 +60,16 @@ form p {
 
 form input {
   background-color: rgba(100,100,100,0.3);
-  border-radius: 6px;
+  border-radius: 3px;
   border: 1px solid #666;
   padding: 18px 12px;
   margin-bottom: 12px;
   outline: none;
   color: white;
+}
+
+form input:focus {
+  border: 1px solid #FFF;
 }
 
 form input::placeholder {
@@ -83,15 +87,38 @@ input:-webkit-autofill {
 
 form button {
   padding: 18px 12px;
-  border-radius: 6px;
-  background: #007A82;
-  color: white;
+  border-radius: 3px;
   border: none;
-  cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-form button:hover {
+form button.active {
+  background: #007A82;
+  cursor: pointer;
+  color: white;
+}
+
+form button svg {
+  margin-right: 8px;
+}
+
+form button.active svg {
+  fill: #FFF;
+}
+
+form button.inactive {
+  background: #7F7F7F;
+  color: #BBB;
+}
+
+form button.inactive svg {
+  fill: #BBB;
+}
+
+form button.active:hover {
   background: #00adb5;
 }
 
@@ -99,4 +126,21 @@ form span {
   color: orange;
   font-size: 0.95em;
   margin-bottom: 12px;
+}
+
+.password-strength {
+  color: white;
+  margin-bottom: 12px;
+  font-size: 0.95em;
+}
+
+.password-meter-wrapper {
+  width: 100%;
+  height: 5px;
+  background: rgba(255,255,255,0.3);
+  margin-bottom: 12px
+}
+
+.password-meter {
+  height: 100%;
 }

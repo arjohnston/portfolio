@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-nodejs')
 
-let UserSchema = new Schema({
+const UserSchema = new Schema({
   username: {
     type: String,
     unique: true,
@@ -12,10 +12,12 @@ let UserSchema = new Schema({
     type: String,
     required: true
   }
-})
+},
+{ collection: 'User' }
+)
 
 UserSchema.pre('save', function (next) {
-  let user = this
+  const user = this
   if (this.isModified('password') || this.isNew) {
     bcrypt.genSalt(10, function (error, salt) {
       if (error) {
@@ -46,4 +48,7 @@ UserSchema.methods.comparePassword = function (passwd, callback) {
   })
 }
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports =
+  mongoose.models && mongoose.models.User
+    ? mongoose.models.User
+    : mongoose.model('User', UserSchema)

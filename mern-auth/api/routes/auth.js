@@ -4,30 +4,59 @@ const router = express.Router()
 const passport = require('passport')
 require('../config/passport')(passport)
 const User = require('../models/user')
-const config = require('../config/config')
+const config = require('../../util/settings')
+const { OK, UNAUTHORIZED, BAD_REQUEST, CONFLICT } = require('../../util/statusCodes')
+
+router.post('/checkIfUserExists', (req, res) => {
+  if (!req.body.username) {
+    return res.status(BAD_REQUEST).send({ message: 'Bad Request.' })
+  }
+
+  User.findOne(
+    {
+      username: req.body.username.toLowerCase()
+    },
+    function (error, user) {
+      if (error) {
+        // Bad Request
+        return res.status(BAD_REQUEST).send({ message: 'Bad Request.' })
+      }
+
+      if (!user) {
+        // Member username does not exist
+        res.sendStatus(OK)
+      } else {
+        // User username does exist
+        res.sendStatus(CONFLICT)
+      }
+    }
+  )
+})
 
 // Registers a new user if the username is unique
 router.post('/register', function (req, res) {
+  if (!req.body.username || !req.body.password) return res.status(BAD_REQUEST).send({ message: 'Bad Request.' })
+
   if (req.body.username && req.body.password) {
-    let newUser = new User({
+    const newUser = new User({
       username: req.body.username,
       password: req.body.password
     })
 
-    let testPassword = testPasswordStrength(req.body.password)
+    const testPassword = testPasswordStrength(req.body.password)
 
     if (!testPassword.success) {
       // Bad Request
-      return res.status(400).send({ message: testPassword.message })
+      return res.status(BAD_REQUEST).send({ message: testPassword.message })
     }
 
     newUser.save(function (error) {
       if (error) {
         // Confict
-        res.status(409).send({ message: 'Username already exists.' })
+        res.status(CONFLICT).send({ message: 'Username already exists.' })
       } else {
         // Ok
-        res.sendStatus(200)
+        res.sendStatus(OK)
       }
     })
   }
@@ -35,17 +64,19 @@ router.post('/register', function (req, res) {
 
 // Logs the user in if the password and username match the database
 router.post('/login', function (req, res) {
+  if (!req.body.username || !req.body.password) return res.status(BAD_REQUEST).send({ message: 'Bad Request.' })
+
   User.findOne({
     username: req.body.username
   }, function (error, user) {
     if (error) {
       // Bad Request
-      return res.status(400).send({ message: 'Bad Request.' })
+      return res.status(BAD_REQUEST).send({ message: 'Bad Request.' })
     }
 
     if (!user) {
       // Unauthorized if the username does not match any records in the database
-      res.status(401).send({ message: 'Username or password does not match our records.' })
+      res.status(UNAUTHORIZED).send({ message: 'Username or password does not match our records.' })
     } else {
       // Check if password matches database
       user.comparePassword(req.body.password, function (error, isMatch) {
@@ -55,11 +86,15 @@ router.post('/login', function (req, res) {
           const jwtOptions = {
             expiresIn: '2h'
           }
-          let token = jwt.sign(user.toJSON(), config.secretKey, jwtOptions)
-          res.status(200).send({ token: 'JWT ' + token })
+
+          const userToBeSigned = {
+            username: user.username
+          }
+          const token = jwt.sign(userToBeSigned, config.secretKey, jwtOptions)
+          res.status(OK).send({ token: 'JWT ' + token })
         } else {
           // Unauthorized
-          res.status(401).send({ message: 'Username or password does not match our records.' })
+          res.status(UNAUTHORIZED).send({ message: 'Username or password does not match our records.' })
         }
       })
     }
@@ -70,15 +105,19 @@ router.post('/login', function (req, res) {
 // Used on the inital load of root '/'
 router.post('/verify', function (req, res) {
   // Strip JWT from the token
+  if (!req.body.token) {
+    return res.sendStatus(BAD_REQUEST)
+  }
+
   const token = req.body.token.replace(/^JWT\s/, '')
 
   jwt.verify(token, config.secretKey, function (error, decoded) {
     if (error) {
       // Unauthorized
-      res.sendStatus(401)
+      res.sendStatus(UNAUTHORIZED)
     } else {
       // Ok
-      res.sendStatus(200)
+      res.status(OK).send(decoded)
     }
   })
 })
