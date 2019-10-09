@@ -10,59 +10,58 @@ This project is a boilerplate using the MERN stack to create a simple web app wi
 ## Installation
 
 ### Mern-auth Boilerplate
+
 Clone the repository:
 ```sh
 git clone https://github.com/arjohnston/boilerplates.git
 ```
 
-Install the dependencies:
+### Install and setup the project
+
+By default, a strong password policy will be used, to change it use `--medium` or `--weak` appended to the command below for `node setup.js`
 ```sh
-npm install
+cd /util/
+node setup.js
 ```
 
-Setup the `/config/config.js` by copying the contents of `config.example.js` into a `config.js` file in the same file directory. `config.js` is automatically ignored by `.gitignore`
-
-### MongoDB
-This project uses [Mongo](https://www.mongodb.com/) as it's database.<br>
-MacOS Installation instructions below. For other operating systems, visit [the MongoDB installation guide](https://docs.mongodb.com/manual/administration/install-community/).
-
-Install via brew:
+For help with additional commands, use:
 ```sh
-brew update
-brew install mongodb
+node setup.js --help
 ```
 
-Create the required directory:
+### Manual installation of dependencies
+
+Use the following command to print out a list of all dependencies as well as build the configuration file
 ```sh
-mkdir -p /data/db
+node setup.js --manual
 ```
-
-Set the permissions:
-> Note: it's recommended to set up a user and group over using root for security reasons
-
-```sh
-sudo chown -R `id -un` /data/db
-```
-
-Run MongoDB:
-```sh
-mongod
-```
-
-Run the program for the first time in another terminal window:
-```sh
-npm run build && npm start
-```
-
-To utilize hot-reloading, development will need to be ran as well. In another terminal window:
-```sh
-npm run dev
-```
-
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm run pm2-start`
+
+Launches the daemons for the database and API server
+
+### `npm run pm2-stop`
+
+Stops the daemons created by PM2
+
+### `npm test`
+
+Launches the test runner utilizing mocha and chai
+
+### `npm run deploy`
+
+Runs a script to get the latest changes from github, installs any new dependencies and spawns the daemons
+
+### `npm run lint`
+
+Runs a linter against the repository to standardize the format of the code
+
+
+## Other available scripts
 
 ### `npm run dev`
 
@@ -81,33 +80,9 @@ Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 The app needs to be re-built if you make edits<br>
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](#running-tests) for more information.
-
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br>
-
-
-
-// Sets the required strength. Default is 'strong'
-// strong:
-// Contains at least 1 lowercase alphabetical character
-// Contains at least 1 uppercase alphabetical character
-// Contain at least 1 numeric character
-// Contain at least one special character: !@#\$%\^&
-// The string must be at least eight characters or longer
-
-// medium:
-// Contains at least 1 lowercase alphabetical character and
-// at least 1 uppercase alphabetical character or
-// contains at least one lowercase alphabetical character and
-// at least 1 numeric character or
-// contains at least one uppercase alphabetical character and
-// at least 1 numeric character
-// The string must be at least six characters or longer
