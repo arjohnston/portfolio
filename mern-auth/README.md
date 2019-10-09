@@ -40,30 +40,25 @@ node setup.js --manual
 
 In the project directory, you can run:
 
-### `npm run pm2-start`
+Launch the daemons for the database and API server
+`npm run pm2-start`
 
-Launches the daemons for the database and API server
+Stop the daemons created by PM2
+`npm run pm2-stop`
 
-### `npm run pm2-stop`
+Launch the test runner utilizing mocha and chai
+`npm test`
 
-Stops the daemons created by PM2
+Run a script to get the latest changes from github, installs any new dependencies and spawns the daemons
+`npm run deploy`
 
-### `npm test`
-
-Launches the test runner utilizing mocha and chai
-
-### `npm run deploy`
-
-Runs a script to get the latest changes from github, installs any new dependencies and spawns the daemons
-
-### `npm run lint`
-
-Runs a linter against the repository to standardize the format of the code
+Run a linter against the repository to standardize the format of the code
+`npm run lint`
 
 
 ## Other available scripts
 
-### `npm run dev`
+`npm run dev`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -73,14 +68,14 @@ You will also see any lint errors in the console.
 
 > Note: In order to use API's while in development mode, the express server needs to be run in a separate terminal
 
-### `npm run start`
+`npm run start`
 
 Runs the app in production mode.<br>
 Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 The app needs to be re-built if you make edits<br>
 
-### `npm run build`
+`npm run build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
