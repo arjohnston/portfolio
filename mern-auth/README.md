@@ -40,27 +40,27 @@ node setup.js --manual
 
 In the project directory, you can run:
 
-Launch the daemons for the database and API server
+Launch the daemons for the database and API server:
 ```sh
 npm run pm2-start
 ```
 
-Stop the daemons created by PM2
+Stop the daemons created by PM2:
 ```sh
 npm run pm2-stop
 ```
 
-Launch the test runner utilizing mocha and chai
+Launch the test runner utilizing mocha and chai:
 ```sh
 npm test
 ```
 
-Run a script to get the latest changes from github, installs any new dependencies and spawns the daemons
+Run a script to get the latest changes from github, installs any new dependencies and spawns the daemons:
 ```sh
 npm run deploy
 ```
 
-Run a linter against the repository to standardize the format of the code
+Run a linter against the repository to standardize the format of the code:
 ```sh
 npm run lint
 ```

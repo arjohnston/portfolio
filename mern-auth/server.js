@@ -13,10 +13,15 @@ const auth = require('./api/routes/auth')
 // Set the port to 3000 for development and 8080 for production
 const DEV = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test'
 const TEST = process.env.NODE_ENV === 'test'
+
+// Utilize port 3000 for Development
+// Utilize port 8080 for Production
 const PORT = DEV ? '3000' : '8080'
+
+// Name the database based if its in test mode or development/production
 const DATABASE_NAME = TEST ? 'mern-auth-test' : 'mern-auth'
 
-// Configure Mongoose
+// Configure and connect to Mongoose
 mongoose.Promise = require('bluebird')
 mongoose.connect(
   `mongodb://localhost/${DATABASE_NAME}`,
@@ -57,6 +62,7 @@ if (DEV) {
 app.use('/api/auth', auth)
 
 // Catch 404 and forward to error handler
+// if not in test mode
 if (!TEST) {
   app.use(function (req, res, next) {
     const error = new Error('Not Found')
@@ -81,6 +87,8 @@ const server = http.createServer(app)
 server.listen(PORT, error => {
   if (error) throw error
 
+  // Avoid printing the following output
+  // while mocha & chai are running
   if (!TEST) {
     clearTerminal()
     console.log(
@@ -102,7 +110,7 @@ server.listen(PORT, error => {
   }
 })
 
-// Utility functions
+// Utility functions for terminal output formatting
 function formatTerminalOutput (options) {
   const GREEN_TEXT = '\x1b[32m'
   const BLACK_TEXT = '\x1b[30m'
@@ -122,4 +130,5 @@ function clearTerminal () {
   process.stdout.write(CLEAR_CONSOLE)
 }
 
+// Export the server so Mocha & Chai can have access to it
 module.exports = server
