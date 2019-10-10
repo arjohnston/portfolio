@@ -2,10 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-nodejs')
 
+// Create a new schema for the User
 const UserSchema = new Schema({
   username: {
     type: String,
-    unique: true,
+    unique: true, // Don't allow multiple users with the same username
     required: true
   },
   password: {
@@ -16,6 +17,8 @@ const UserSchema = new Schema({
 { collection: 'User' }
 )
 
+// When saving the user, ensure the password
+// is hashed
 UserSchema.pre('save', function (next) {
   const user = this
   if (this.isModified('password') || this.isNew) {
@@ -38,6 +41,8 @@ UserSchema.pre('save', function (next) {
   }
 })
 
+// Utility function to ensure the password correctly
+// matches that of the one in the database
 UserSchema.methods.comparePassword = function (passwd, callback) {
   bcrypt.compare(passwd, this.password, function (error, isMatch) {
     if (error) {
