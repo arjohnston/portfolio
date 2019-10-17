@@ -134,11 +134,11 @@ form .form-input-validation {
 }
 
 form .form-input-success .form-input-validation {
-  background-image: url(/static/images/input-checkmark.png);
+  background-image: url(/images/input-checkmark.png);
 }
 
 form .form-input-fail .form-input-validation {
-  background-image: url(/static/images/input-x.png);
+  background-image: url(/images/input-x.png);
 }
 
 form .form-input-message {

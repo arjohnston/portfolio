@@ -46,21 +46,21 @@ app.prepare().then(() => {
   })
 
   // Serve static files at root
-  const options = {
-    root: path.join(__dirname, '/static/'),
-    headers: {
-      'Content-Type': 'text/plain;charset=UTF-8'
-    }
-  }
-  server.get('/robots.txt', (req, res) =>
-    res.status(200).sendFile('robots.txt', options)
-  )
-  server.get('/favicon.ico', (req, res) =>
-    res.status(200).sendFile('favicon.ico', options)
-  )
-  server.get('/sitemap.xml', (req, res) =>
-    res.status(200).sendFile('sitemap.xml', options)
-  )
+  // const options = {
+  //   root: path.join(__dirname, '/static/'),
+  //   headers: {
+  //     'Content-Type': 'text/plain;charset=UTF-8'
+  //   }
+  // }
+  // server.get('/robots.txt', (req, res) =>
+  //   res.status(200).sendFile('robots.txt', options)
+  // )
+  // server.get('/favicon.ico', (req, res) =>
+  //   res.status(200).sendFile('favicon.ico', options)
+  // )
+  // server.get('/sitemap.xml', (req, res) =>
+  //   res.status(200).sendFile('sitemap.xml', options)
+  // )
 
   // Fetch POST data for form submissions
   server.post('/api/recaptcha', (req, res) => {

@@ -5,7 +5,7 @@ export default class Header extends React.Component {
     return (
       <header>
         <div>
-          <img src='/static/svg/logo.svg' alt='logo' />
+          <img src='/svg/logo.svg' alt='logo' />
         </div>
         <style jsx>{`
           header {

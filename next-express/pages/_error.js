@@ -25,7 +25,7 @@ export default class extends React.Component {
               min-height: 600px;
               width: 100%;
               background-color: #2b366b;
-              background-image: url(/static/images/bldg.png);
+              background-image: url(/images/bldg.png);
               background-repeat: no-repeat;
               background-position: center;
               display: flex;
