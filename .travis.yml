@@ -5,6 +5,7 @@ services:
   - mongodb
 install:
  - npm install
+ - node -e 'require("./utils/config/setup.js")()'
 script:
  - npm run test
  - npm run build
