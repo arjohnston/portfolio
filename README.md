@@ -1,1 +1,1 @@
-This is my portfolio website at [arjohnston.io](https://arjohnston.dev).
+This is my portfolio website at [arjohnston.dev](https://arjohnston.dev).
