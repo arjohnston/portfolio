@@ -1,27 +1,45 @@
 {
-  "name": "company-name",
+  "name": "portfolio",
   "version": "1.0.0",
-  "main": "index.js",
   "author": "Andrew Johnston",
   "license": "MIT",
-  "description": "A react boilerplate using Next and Express",
+  "description": "Portfolio for Andrew Johnston",
   "repository": {
     "type": "git",
-    "url": "github.com/arjohnston/boilerplates"
+    "url": "github.com/arjohnston/portfolio"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "address": "^1.1.2",
+    "axios": "^0.19.2",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "compression": "^1.7.4",
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
     "express-sanitizer": "^1.0.5",
-    "googleapis": "^47.0.0",
+    "helmet": "^3.22.0",
     "isomorphic-fetch": "^2.2.1",
     "lru-cache": "^5.1.1",
+    "mocha": "^7.1.1",
+    "mongoose": "^5.9.7",
     "next": "^9.1.1",
-    "nodemailer": "^6.3.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "prop-types": "^15.7.2",
     "raw-loader": "^4.0.0",
     "react": "^16.10.2",
@@ -40,31 +58,35 @@
     "husky": "^4.2.3",
     "jest": "^25.1.0",
     "lint-staged": "^10.0.7",
+    "morgan": "^1.10.0",
     "prettier": "^1.18.2",
     "react-dom": "^16.8.6",
     "react-test-renderer": "^16.8.6",
     "standard": "^14.3.1"
   },
   "scripts": {
-    "test": "NODE_ENV=test jest",
+    "test": "npm run build && mocha",
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "npm run build && NODE_ENV=production node server.js",
     "deploy": "git pull && npm install && npm update && npm run build && pm2 restart www",
-    "lint": "prettier 'utils/**/*.js' 'static/js/**/*.js' '__tests__/**/*.js' 'components/**/*.js' 'pages/**/*.js' '*.js' --write --single-quote --no-semi && standard --fix",
-    "precommit": "lint-staged"
+    "lint": "prettier 'utils/**/*.js' 'static/js/**/*.js' '__tests__/**/*.js' 'components/**/*.js' 'pages/**/*.js' '*.js' --write --single-quote --no-semi && standard --fix"
   },
   "lint-staged": {
     "*.js": [
       "prettier --write --single-quote --no-semi",
-      "standard --fix",
-      "git add"
+      "standard --fix"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "standard": {
     "globals": [
+      "fetch",
       "$"
-    ],
-    "parser": "babel-eslint"
+    ]
   }
 }

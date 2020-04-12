@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga'
-import api from '../config/config'
+import api from '../config/keys'
 
 const DEV = process.env.NODE_ENV !== 'production'
 

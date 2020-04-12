@@ -56,3 +56,7 @@ coverage
 #######################################
 .idea
 ci-react.iml
+
+# Config files
+config/*.json
+config/keys.js
